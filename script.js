@@ -429,38 +429,37 @@ const heroTitle = document.querySelector('.hero-title');
 if (heroTitle) {
     const titleText = heroTitle.textContent;
     heroTitle.textContent = '';
-    for (let char of titleText) {
+    const chars = titleText.split('');
+    chars.forEach(char => {
         const span = document.createElement('span');
-        span.textContent = char;
-        if (char === ' ') span.innerHTML = '&nbsp;';
-        span.style.opacity = '0';
-        span.style.display = 'inline-block';
-        span.style.transform = 'translateY(20px)';
+        span.textContent = char === ' ' ? '\u00A0' : char; // Non-breaking space for spaces
         heroTitle.appendChild(span);
-    }
-    // Remove gs-hero from hero-title to animate separately
-    heroTitle.classList.remove('gs-hero');
+    });
 }
 
 // Hero Animation Timeline
 const tl = gsap.timeline({delay: 2.2});
 
-// Slide up the title container
-tl.to('.hero-title', {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "expo.out"
-}, 0);
+// Initial hidden state set via GSAP immediately
+gsap.set('.hero-title', { opacity: 0, y: 30 });
+gsap.set('.hero-title span', { opacity: 0, y: 20 });
 
-// Stagger the letters to appear one by one with a cinematic fade
+// Animate the title container in
+tl.to('.hero-title', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: "power3.out"
+});
+
+// Stagger the letters
 tl.to('.hero-title span', {
     opacity: 1,
     y: 0,
     duration: 0.8,
-    stagger: 0.1,
+    stagger: 0.05,
     ease: "power2.out"
-}, 0.2);
+}, "-=0.6");
 
 // Animate the remaining hero elements
 tl.to('.gs-hero', {
@@ -469,7 +468,7 @@ tl.to('.gs-hero', {
     duration: 1,
     stagger: 0.15,
     ease: "expo.out"
-}, 1.2);
+}, "-=0.4");
 
 // Scroll Reveal Animations - Global
 const revealElements = document.querySelectorAll('.gs-reveal');

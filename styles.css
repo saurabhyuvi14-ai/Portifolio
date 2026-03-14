@@ -464,12 +464,13 @@ a {
     font-size: clamp(2.5rem, 6vw, 4.2rem);
     line-height: 1;
     margin-bottom: 1rem;
-    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-primary);
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(30px);
+}
+
+.hero-title span {
+    display: inline-block;
 }
 
 .hero-subtitle {
