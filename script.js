@@ -432,17 +432,19 @@ if (heroTitle) {
     const chars = titleText.split('');
     chars.forEach(char => {
         const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char; // Non-breaking space for spaces
+        span.textContent = char === ' ' ? '\u00A0' : char; 
+        span.style.display = 'inline-block';
+        span.style.opacity = '0';
+        span.style.color = 'inherit'; // Ensure it uses the parent's color
         heroTitle.appendChild(span);
     });
 }
 
 // Hero Animation Timeline
-const tl = gsap.timeline({delay: 2.2});
+const tl = gsap.timeline({delay: 2.5}); // Slightly more delay to ensure loader is gone
 
 // Initial hidden state set via GSAP immediately
-gsap.set('.hero-title', { opacity: 0, y: 30 });
-gsap.set('.hero-title span', { opacity: 0, y: 20 });
+gsap.set('.hero-title', { opacity: 0, y: 20 });
 
 // Animate the title container in
 tl.to('.hero-title', {
@@ -452,11 +454,11 @@ tl.to('.hero-title', {
     ease: "power3.out"
 });
 
-// Stagger the letters
+// Stagger the letters with a clear staggered reveal
 tl.to('.hero-title span', {
     opacity: 1,
     y: 0,
-    duration: 0.8,
+    duration: 0.6,
     stagger: 0.05,
     ease: "power2.out"
 }, "-=0.6");
@@ -468,7 +470,7 @@ tl.to('.gs-hero', {
     duration: 1,
     stagger: 0.15,
     ease: "expo.out"
-}, "-=0.4");
+}, "-=0.2");
 
 // Scroll Reveal Animations - Global
 const revealElements = document.querySelectorAll('.gs-reveal');
